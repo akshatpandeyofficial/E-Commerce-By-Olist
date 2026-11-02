@@ -9,3 +9,5 @@ SELECT COUNT(*) FROM sellers;
 SELECT COUNT(*) FROM category_translation;
 
 #Everything is Imported
+
+show tables;
