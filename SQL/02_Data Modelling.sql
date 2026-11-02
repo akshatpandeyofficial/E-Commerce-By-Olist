@@ -63,16 +63,10 @@ select * from order_items;
 Alter table order_items
 ADD PRIMARY KEY(order_id,order_item_id);
 
-
 #Order Payments
 select * from order_payments ;
 alter table order_payments
 ADD PRIMARY KEY (order_id, payment_sequential);
-
-#order Reviews
-select * from order_reviews;
-alter table order_reviews
-ADD PRIMARY KEY (review_id);
 
 
 #orders
@@ -84,19 +78,35 @@ group by order_id
 having count(*)>1;
 
 alter table orders
-ADD PRIMARY KEY (order_id)
+ADD PRIMARY KEY (order_id);
+desc orders;
 
+#product
 
+select * from Products;
+alter table products
+ADD PRIMARY KEY (product_id);
 
+DESCRIBE products;
 
+#sellers
 
+select * from sellers;
+alter table sellers
+ADD PRIMARY KEY (seller_id);
 
+desc sellers;
 
+#category
+select * from category_translation;
 
+ALTER TABLE category_translation
+MODIFY product_category_name VARCHAR(100) NOT NULL;
 
+ALTER TABLE category_translation
+ADD PRIMARY KEY (product_category_name);
 
-
-
+desc category_translation;
 
 
 
