@@ -54,6 +54,8 @@ MODIFY seller_id VARCHAR(100) NOT NULL;
 #Creating Primary key
 
 select * from customers;
+alter table customers
+ADD PRIMARY KEY (customer_id);
 
 
 
