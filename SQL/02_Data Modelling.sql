@@ -109,6 +109,27 @@ ADD PRIMARY KEY (product_category_name);
 desc category_translation;
 
 
+#Adding Foreign Keys 
+
+
+select * from order_items;
+
+alter table order_items
+ADD CONSTRAINT item_orders
+FOREIGN KEY (order_id)
+REFERENCES orders(order_id);
+
+ALTER TABLE order_items
+ADD CONSTRAINT items_product
+FOREIGN KEY (product_id)
+REFERENCES products(product_id);
+
+SELECT COUNT(DISTINCT product_id)
+FROM order_items
+WHERE product_id NOT IN (
+    SELECT product_id FROM products
+);
+SELECT COUNT(*) FROM products;
 
 
 
@@ -116,29 +137,9 @@ desc category_translation;
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+select count(*)
+ from products;
+DESCRIBE products;
 
 
 
