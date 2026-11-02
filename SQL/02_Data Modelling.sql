@@ -57,6 +57,13 @@ select * from customers;
 alter table customers
 ADD PRIMARY KEY (customer_id);
 
+select * from order_items;
+Alter table order_items
+ADD PRIMARY KEY(order_id,order_item_id);
+
+select * from order_payments ;
+alter table order_payments
+ADD PRIMARY KEY (order_id, payment_sequential);
 
 
 
