@@ -37,17 +37,19 @@ modify order_id varchar(100) NOT NULL;
 #orders
 select * from orders;
 ALTER TABLE orders
-MODIFY order_id VARCHAR(50) NOT NULL,
-MODIFY customer_id VARCHAR(50) NOT NULL;
+MODIFY order_id VARCHAR(100) NOT NULL,
+MODIFY customer_id VARCHAR(100) NOT NULL;
 
 #Products 
+select * from products;
+ALTER TABLE products
+MODIFY product_id VARCHAR(100) NOT NULL;
 
 
-
-
-
-
-
+#Sellers
+select * from sellers;
+ALTER TABLE sellers
+MODIFY seller_id VARCHAR(100) NOT NULL;
 
 
 
