@@ -154,8 +154,18 @@ REFERENCES orders(order_id);
 
 
 
+# creating INdexes for Faster SQL QUERY
+CREATE INDEX idx_orders_customer
+ON orders(customer_id);
 
+CREATE INDEX idx_items_product
+ON order_items(product_id);
 
+CREATE INDEX idx_items_seller
+ON order_items(seller_id);
+
+CREATE INDEX idx_orders_status
+ON orders(order_status);
 
 
 
