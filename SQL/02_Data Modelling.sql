@@ -34,7 +34,14 @@ alter table order_reviews
 modify review_id varchar(100) NOT NULL,
 modify order_id varchar(100) NOT NULL;
 
-#order 
+#orders
+select * from orders;
+ALTER TABLE orders
+MODIFY order_id VARCHAR(50) NOT NULL,
+MODIFY customer_id VARCHAR(50) NOT NULL;
+
+#Products 
+
 
 
 
