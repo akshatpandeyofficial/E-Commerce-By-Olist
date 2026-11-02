@@ -124,12 +124,12 @@ ADD CONSTRAINT items_product
 FOREIGN KEY (product_id)
 REFERENCES products(product_id);
 
-SELECT COUNT(DISTINCT product_id)
-FROM order_items
-WHERE product_id NOT IN (
-    SELECT product_id FROM products
-);
-SELECT COUNT(*) FROM products;
+alter table order_items
+ADD CONSTRAINT item_seller
+FOREIGN KEY (seller_id)
+REFERENCES sellers(seller_id);
+
+select * from order_payments;
 
 
 
@@ -137,8 +137,10 @@ SELECT COUNT(*) FROM products;
 
 
 
-select count(*)
- from products;
+
+
+select * from order_items;
+
 DESCRIBE products;
 
 
