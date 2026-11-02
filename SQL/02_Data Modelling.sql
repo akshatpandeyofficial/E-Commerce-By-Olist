@@ -34,6 +34,8 @@ alter table order_reviews
 modify review_id varchar(100) NOT NULL,
 modify order_id varchar(100) NOT NULL;
 
+#order 
+
 
 
 
