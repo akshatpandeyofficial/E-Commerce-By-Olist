@@ -111,7 +111,7 @@ desc category_translation;
 
 #Adding Foreign Keys 
 
-
+#ORDER ITEMS
 select * from order_items;
 
 alter table order_items
@@ -129,6 +129,7 @@ ADD CONSTRAINT item_seller
 FOREIGN KEY (seller_id)
 REFERENCES sellers(seller_id);
 
+#ORDERS 
 select * from orders;
 
 ALTER TABLE orders
@@ -136,16 +137,25 @@ ADD CONSTRAINT fk_orders_customers
 FOREIGN KEY (customer_id)
 REFERENCES customers(customer_id);
 
+#order PAYMENTS & ORDER REVIEWS
+
+select * from order_reviews;
+select * from order_payments;
+
+ALTER TABLE order_payments
+ADD CONSTRAINT payments_orders
+FOREIGN KEY (order_id)
+REFERENCES orders(order_id);
+
+ALTER TABLE order_reviews
+ADD CONSTRAINT reviews_orders
+FOREIGN KEY (order_id)
+REFERENCES orders(order_id);
 
 
 
 
 
-
-
-select * from order_items;
-
-DESCRIBE products;
 
 
 
