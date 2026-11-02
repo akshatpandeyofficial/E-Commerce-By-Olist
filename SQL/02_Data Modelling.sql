@@ -129,8 +129,12 @@ ADD CONSTRAINT item_seller
 FOREIGN KEY (seller_id)
 REFERENCES sellers(seller_id);
 
-select * from order_payments;
+select * from orders;
 
+ALTER TABLE orders
+ADD CONSTRAINT fk_orders_customers
+FOREIGN KEY (customer_id)
+REFERENCES customers(customer_id);
 
 
 
