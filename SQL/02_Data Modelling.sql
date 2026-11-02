@@ -53,19 +53,38 @@ MODIFY seller_id VARCHAR(100) NOT NULL;
 
 #Creating Primary key
 
+#Customers
 select * from customers;
 alter table customers
 ADD PRIMARY KEY (customer_id);
 
+#Order Items
 select * from order_items;
 Alter table order_items
 ADD PRIMARY KEY(order_id,order_item_id);
 
+
+#Order Payments
 select * from order_payments ;
 alter table order_payments
 ADD PRIMARY KEY (order_id, payment_sequential);
 
+#order Reviews
+select * from order_reviews;
+alter table order_reviews
+ADD PRIMARY KEY (review_id);
 
+
+#orders
+select * from orders;
+
+select order_id , count(*)
+from orders 
+group by order_id
+having count(*)>1;
+
+alter table orders
+ADD PRIMARY KEY (order_id)
 
 
 
