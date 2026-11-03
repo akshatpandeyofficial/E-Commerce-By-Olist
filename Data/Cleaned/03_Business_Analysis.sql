@@ -110,7 +110,9 @@ group by p.product_category_name
 order by total_revenue asc
 limit 10;
 
-
+#---------------------------------------------
+#Customer analysis
+#---------------------------------------------
 
 
 
