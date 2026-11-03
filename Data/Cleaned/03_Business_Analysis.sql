@@ -49,6 +49,18 @@ group by order_id
 as order_totals;
 
 
+#top 10 Selling products with high and low sales
+select * from products;
+SELECT
+    MAX(total_sold) AS highest_sales,
+    MIN(total_sold) AS lowest_sales
+FROM (
+    SELECT
+        product_id,
+        COUNT(*) AS total_sold
+    FROM order_items
+    GROUP BY product_id
+) AS product_sales;
 
 
 
