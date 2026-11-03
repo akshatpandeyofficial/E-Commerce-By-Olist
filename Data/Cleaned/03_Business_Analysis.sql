@@ -77,6 +77,20 @@ group by p.product_category_name
 order by total_revenue desc;
 
 
+#products Category having highest number of orders
+
+select * from order_items;
+select* from products;
+
+
+select p.product_category_name, count(distinct oi.order_id) as total_orders
+from order_items oi
+JOIN products p
+on oi.product_id = p.product_id
+group by p.product_category_name
+order by total_orders desc;
+
+
 
 
 
