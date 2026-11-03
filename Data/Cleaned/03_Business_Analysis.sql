@@ -1,5 +1,8 @@
 select * from order_payments;
 
+#---------------------------------------------
+#Revenue & Sales Analysis
+#---------------------------------------------
 
 #Total Revenue generated
 select round(sum(payment_value),2) as total_payment 
@@ -47,6 +50,12 @@ from order_payments
 group by order_id
 )
 as order_totals;
+
+
+
+#---------------------------------------------
+#Product Analysis
+#---------------------------------------------
 
 
 #top 10 Selling products with high and low sales
@@ -98,7 +107,8 @@ from order_items oi
 join products p
 on oi.product_id = oi.product_id
 group by p.product_category_name
-order by total_revenue desc;
+order by total_revenue asc
+limit 10;
 
 
 
