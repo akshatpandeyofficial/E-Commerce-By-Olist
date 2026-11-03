@@ -91,6 +91,16 @@ group by p.product_category_name
 order by total_orders desc;
 
 
+#products with the lowest sales 
+select * from order_items;
+select p.product_category_name, round(sum(oi.price),2) as total_revenue
+from order_items oi
+join products p
+on oi.product_id = oi.product_id
+group by p.product_category_name
+order by total_revenue desc;
+
+
 
 
 
