@@ -37,6 +37,39 @@ group by year(o.order_purchase_timestamp) ,
 month(o.order_purchase_timestamp)
 order by total_revenue desc;
 
+#average Order value
+select * from orders;
+select* from order_payments;
+select round(avg(order_value),2) as Average_order_value
+from (
+select order_id , sum(payment_value) as order_value
+from order_payments
+group by order_id
+)
+as order_totals;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
