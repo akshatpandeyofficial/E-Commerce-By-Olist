@@ -187,6 +187,13 @@ from orders
 group by order_status 
 order by percentage desc;
 
+#Average Delivery Time
+
+select round(avg(datediff(order_delivered_customer_date,
+                order_purchase_timestamp)),2) as AVG_delievery_days
+from orders
+where order_status = "Delivered"
+AND order_delivered_customer_date is not null
 
 
 
