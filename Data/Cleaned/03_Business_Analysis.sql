@@ -120,16 +120,38 @@ select * from customers;
 select count(distinct(customer_id)) as Unique_Customers from customers;
 
 
+select * from orders;
+
+
+
+
+
+#repeated customers
+SELECT
+    COUNT(*) AS repeat_customers
+FROM (
+    SELECT
+        customer_unique_id,
+        COUNT(*) AS total_orders
+    FROM customers
+    GROUP BY customer_unique_id
+    HAVING COUNT(*) > 1
+) AS repeat_buyers;
 
 
 
 
 
 
+select * from customers;
 
-
-
-
+select count(*) as repeated_customers 
+from ( 
+select customer_unique_id , count(*) as total_orders
+from customers
+group by customer_unique_id
+having count(*) >1) 
+as repeated_customers;
 
 
 
