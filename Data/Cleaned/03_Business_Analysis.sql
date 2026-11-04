@@ -166,20 +166,7 @@ where o.order_status = 'Delivered'
 group by c.customer_unique_id) as Customer_totals;
 
 
-SELECT
-    ROUND(AVG(customer_spending), 2) AS average_customer_spending
-FROM (
-    SELECT
-        c.customer_unique_id,
-        SUM(p.payment_value) AS customer_spending
-    FROM customers c
-    JOIN orders o
-        ON c.customer_id = o.customer_id
-    JOIN order_payments p
-        ON o.order_id = p.order_id
-    WHERE o.order_status = 'delivered'
-    GROUP BY c.customer_unique_id
-) AS customer_totals;
+
 
 
 
