@@ -116,21 +116,11 @@ limit 10;
 
 select * from customers;
 
-#Unique Customers
+#Unique Customers --:
 select count(distinct(customer_id)) as Unique_Customers from customers;
 
-
+#Repeated Customers --:
 select * from orders;
-
-
-
-
-
-
-
-
-
-
 select * from customers;
 
 select count(*) as repeated_customers 
