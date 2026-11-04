@@ -149,13 +149,37 @@ where o.order_status = 'Delivered'
 group by state
 order by total_revenue desc;
 
+# average Spending Per customer
 
 
 
+select round(avg(customer_spend),2) as customer_average_spend
+from(
+select c.customer_unique_id , 
+sum(p.payment_value) as customer_spend
+from customers c
+join orders o 
+on o.customer_id = c.customer_id
+join order_payments p
+on o.order_id = p.order_id
+where o.order_status = 'Delivered'
+group by c.customer_unique_id) as Customer_totals;
 
 
-
-
+SELECT
+    ROUND(AVG(customer_spending), 2) AS average_customer_spending
+FROM (
+    SELECT
+        c.customer_unique_id,
+        SUM(p.payment_value) AS customer_spending
+    FROM customers c
+    JOIN orders o
+        ON c.customer_id = o.customer_id
+    JOIN order_payments p
+        ON o.order_id = p.order_id
+    WHERE o.order_status = 'delivered'
+    GROUP BY c.customer_unique_id
+) AS customer_totals;
 
 
 
