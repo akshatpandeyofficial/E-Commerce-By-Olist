@@ -204,6 +204,12 @@ AND order_delivered_customer_date IS NOT NULL
 AND order_estimated_delivery_date IS NOT NULL
 and order_delivered_customer_date > order_estimated_delivery_date;
 
+#month having highest order volume
+
+select year(order_purchase_timestamp) as year,
+month(order_purchase_timestamp) as month,
+count(order_id) as total_orders
+from orders
 
 
 
