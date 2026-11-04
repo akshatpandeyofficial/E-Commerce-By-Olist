@@ -137,19 +137,6 @@ select * from customers;
 select * from orders;
 select * from order_payments;
 
-select c.customer_state ,
-round(sum(p.payment_value),2) as total_revenue
-from customers c
-join orders o 
-on o.customer_id = c.customer_id
-join order_payments p
-on p.order_id = o.order_id
-where order_status = 'Delivered'
-group by customer_state
-order by total_revenue desc
-limit 10;
-
-
 
 select c.customer_state as State,
 round(sum(p.payment_value),2) as total_revenue
