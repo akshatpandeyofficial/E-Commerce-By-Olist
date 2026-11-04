@@ -210,7 +210,9 @@ select year(order_purchase_timestamp) as year,
 month(order_purchase_timestamp) as month,
 count(order_id) as total_orders
 from orders
-
+group by  year(order_purchase_timestamp),
+month(order_purchase_timestamp) 
+order by total_orders desc;
 
 
 
