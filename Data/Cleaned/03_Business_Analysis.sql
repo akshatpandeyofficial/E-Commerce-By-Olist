@@ -165,12 +165,27 @@ on o.order_id = p.order_id
 where o.order_status = 'Delivered'
 group by c.customer_unique_id) as Customer_totals;
 
+#---------------------------------------------
+#Order & Delievery Analysis 
+#---------------------------------------------
+
+#order Contribution by order status 
+
+select * from Orders;
+
+select order_status , count(*) as total_orders
+from orders
+group by order_status
+order by total_orders desc;
 
 
+#What percentage of orders are delivered, cancelled, or unavailable?
 
-
-
-
+select order_status,
+round(count(*)*100.0 / (select count(*) from orders),2) as percentage 
+from orders
+group by order_status 
+order by percentage desc;
 
 
 
