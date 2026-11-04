@@ -193,10 +193,16 @@ select round(avg(datediff(order_delivered_customer_date,
                 order_purchase_timestamp)),2) as AVG_delievery_days
 from orders
 where order_status = "Delivered"
-AND order_delivered_customer_date is not null
+AND order_delivered_customer_date is not null;
 
 
-
+#How many orders were delivered late?
+select * from orders;
+select count(*) as late_delievered_orders from orders
+where order_status = 'delivered'
+AND order_delivered_customer_date IS NOT NULL
+AND order_estimated_delivery_date IS NOT NULL
+and order_delivered_customer_date > order_estimated_delivery_date;
 
 
 
