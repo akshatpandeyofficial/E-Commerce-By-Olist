@@ -114,6 +114,10 @@ limit 10;
 #Customer analysis
 #---------------------------------------------
 
+select * from customers;
+
+#Unique Customers
+select count(distinct(customer_id)) as Unique_Customers from customers;
 
 
 
