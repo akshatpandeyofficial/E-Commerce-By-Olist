@@ -259,10 +259,21 @@ order by Revenue_Generated desc;
 
 
 
+#which Sellers Recieves The most Orders
+
+select * from sellers ;
+select * from order_items;
 
 
+select seller_id , count(distinct(order_id)) as total_orders 
+from order_items
+group by seller_id
+order by  total_orders desc;
 
 
+#Average Review Score
+
+select * from order_reviews; 
 
 
 
