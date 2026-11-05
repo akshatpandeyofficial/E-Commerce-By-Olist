@@ -215,10 +215,12 @@ month(order_purchase_timestamp)
 order by total_orders desc;
 
 
+#---------------------------------------------
+#Payment Analysis 
+#---------------------------------------------
 
 
-
-
+select * from order_payments;
 
 
 
