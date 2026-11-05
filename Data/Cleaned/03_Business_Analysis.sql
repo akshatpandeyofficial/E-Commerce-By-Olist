@@ -245,7 +245,17 @@ order by AVG_Payment desc;
 #Seller & Review Analysis
 #---------------------------------------------
 
+#which Seller Generates the highest Revenue 
 
+select * from order_items;
+select * from sellers;
+
+select s.seller_id , round(sum(oi.price),2) as Revenue_Generated
+from order_items oi
+join sellers s
+on oi.seller_id = s.seller_id
+group by s.seller_id
+order by Revenue_Generated desc;
 
 
 
