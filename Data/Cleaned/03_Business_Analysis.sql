@@ -278,11 +278,16 @@ select * from order_reviews;
 select round(avg(review_score),2) as Review_Score
 from order_reviews;
 
+#Product_Category having Lowest Ratings
+
+select * from category_translation;
+select * from products;
+select * from order_reviews;
+select * from order_items;
 
 
-
-
-
+select p.product_category_name ,
+round(avg(
 
 
 
