@@ -242,7 +242,7 @@ order by AVG_Payment desc;
 
 
 #---------------------------------------------
-#Payment Analysis 
+#Seller & Review Analysis
 #---------------------------------------------
 
 
