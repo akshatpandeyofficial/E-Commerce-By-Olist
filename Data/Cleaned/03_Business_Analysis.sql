@@ -230,17 +230,20 @@ group by payment_type
 order by Total_transactions desc;
 
 
-
+#Avg Payment by Payment_type
 select payment_type , round(avg(payment_value),2) as AVG_Payment
 from order_payments
 group by payment_type
 order by AVG_Payment desc;
 
+#percenatage of revenue by each method -:
 
 
 
 
-
+#---------------------------------------------
+#Payment Analysis 
+#---------------------------------------------
 
 
 
