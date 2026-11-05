@@ -234,7 +234,7 @@ order by Total_transactions desc;
 select payment_type , round(avg(payment_value),2) as AVG_Payment
 from order_payments
 group by payment_type
-orde;
+order by AVG_Payment desc;
 
 
 
