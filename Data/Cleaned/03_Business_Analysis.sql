@@ -287,7 +287,15 @@ select * from order_items;
 
 
 select p.product_category_name ,
-round(avg(
+round(avg(r.review_score),2) as average_rating
+from order_reviews r
+join order_items oi
+on r.order_id = oi.order_id
+join products p
+on p.product_id = oi.product_id
+group by p.product_category_name
+order by Average_rating Asc;
+
 
 
 
