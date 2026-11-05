@@ -220,9 +220,14 @@ order by total_orders desc;
 #---------------------------------------------
 
 
+
+#Highest Transactin through which medium 
 select * from order_payments;
 
-
+select payment_type , count(*) as Total_transactions
+from order_payments
+group by payment_type
+order by Total_transactions desc;
 
 
 
