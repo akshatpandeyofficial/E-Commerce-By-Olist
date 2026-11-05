@@ -239,6 +239,11 @@ order by AVG_Payment desc;
 #percenatage of revenue by each method -:
 
 
+select* from order_payments;
+select  payment_type, 
+round(sum(payment_value) *100.0 / (select sum(payment_value) from order_payments),2) as revenue_percentage
+from order_payments
+group by payment_type;
 
 
 #---------------------------------------------
@@ -309,12 +314,25 @@ group by p.product_category_name
 order by Average_rating desc;
 
 
+#state Having the highest Order value 
 
 
+select * from customers;
+select * from orders;
+select * from order_payments;
 
-
-
-
+select c.customer_state , ROUND(
+        SUM(p.payment_value) / COUNT(DISTINCT o.order_id),
+        2
+    ) as AVG_ORDER_VALUE
+    from customers c 
+    join orders o
+    on o.customer_id = c.customer_id
+    join order_payments p 
+    on p.order_id = o.order_id
+   where o.order_status = 'Delivered'
+   group by c.customer_state
+   order by AVG_ORDER_VALUE desc;
 
 
 
