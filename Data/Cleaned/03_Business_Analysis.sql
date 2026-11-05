@@ -332,7 +332,7 @@ select c.customer_state , ROUND(
     on p.order_id = o.order_id
    where o.order_status = 'Delivered'
    group by c.customer_state
-   order by AVG_ORDER_VALUE desc;
+   order by AVG_ORDER_VALUE desc;	
 
 
 
