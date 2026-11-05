@@ -275,8 +275,8 @@ order by  total_orders desc;
 
 select * from order_reviews; 
 
-
-
+select round(avg(review_score),2) as Review_Score
+from order_reviews;
 
 
 
