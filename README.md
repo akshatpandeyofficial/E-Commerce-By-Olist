@@ -18,6 +18,7 @@ An end-to-end data analytics project using the Brazilian Olist E-Commerce datase
 - [Tools and Technologies](#-tools-and-technologies)
 - [Dataset](#-dataset)
 - [Project Workflow](#-project-workflow)
+- [Data Modelling and Relationships](#-data-modelling-and-relationships)
 - [Repository Structure](#-repository-structure)
 - [SQL Business Analysis](#-sql-business-analysis)
 - [Power BI Dashboards](#-power-bi-dashboards)
@@ -81,17 +82,17 @@ The project integrates multiple datasets to provide a consolidated view of busin
 
 ## 🛠️ Tools and Technologies
 
-| Technology       | Purpose                                     |
-| ---------------- | ------------------------------------------- |
-| Python           | Data exploration and preparation            |
-| Pandas           | Data cleaning and transformation            |
-| Jupyter Notebook | Data analysis workflow                      |
-| MySQL            | Database creation and data modelling        |
-| MySQL Workbench  | SQL query execution and database management |
-| SQL              | Business analysis and data extraction       |
-| Power BI Desktop | Interactive dashboard development           |
-| DAX              | KPI calculations and analytical measures    |
-| Git & GitHub     | Version control and project documentation   |
+| Technology | Purpose |
+|---|---|
+| Python | Data exploration and preparation |
+| Pandas | Data cleaning and transformation |
+| Jupyter Notebook | Data analysis workflow |
+| MySQL | Database creation and data modelling |
+| MySQL Workbench | SQL query execution and database management |
+| SQL | Business analysis and data extraction |
+| Power BI Desktop | Interactive dashboard development |
+| DAX | KPI calculations and analytical measures |
+| Git & GitHub | Version control and project documentation |
 
 ## 📁 Dataset
 
@@ -101,17 +102,17 @@ Source: [Kaggle – Brazilian E-Commerce Public Dataset](https://www.kaggle.com/
 
 The project uses multiple interconnected datasets:
 
-| Dataset              | Description                                   |
-| -------------------- | --------------------------------------------- |
-| Customers            | Customer IDs, cities, and states              |
-| Orders               | Order status and purchase/delivery timestamps |
-| Order Items          | Products, sellers, prices, and freight        |
-| Order Payments       | Payment types, values, and installments       |
-| Order Reviews        | Customer ratings and review information       |
-| Products             | Product attributes and categories             |
-| Sellers              | Seller information and locations              |
-| Geolocation          | Brazilian geographic coordinates              |
-| Category Translation | Portuguese-to-English category names          |
+| Dataset | Description |
+|---|---|
+| Customers | Customer IDs, cities, and states |
+| Orders | Order status and purchase/delivery timestamps |
+| Order Items | Products, sellers, prices, and freight |
+| Order Payments | Payment types, values, and installments |
+| Order Reviews | Customer ratings and review information |
+| Products | Product attributes and categories |
+| Sellers | Seller information and locations |
+| Geolocation | Brazilian geographic coordinates |
+| Category Translation | Portuguese-to-English category names |
 
 These datasets were cleaned, validated, and imported into a MySQL database for further analysis.
 
@@ -155,6 +156,60 @@ Using MySQL Workbench:
 - Created foreign-key relationships.
 - Added indexes for frequently used columns.
 - Validated database relationships.
+
+
+### 4. Data Modelling and Relationships
+
+After cleaning and validating the datasets, the tables were connected in Power BI to create a relational data model. The model links customer, order, product, seller, payment, and review information so that the data can be analyzed across the e-commerce order lifecycle.
+
+#### Data Model Diagram
+
+Save the Power BI model screenshot in the `Dashboard Images` folder using the filename `Data Model.png`.
+
+![Olist E-Commerce Data Model](Dashboard%20Images/Data%20Model.png)
+
+#### Main Table Relationships
+
+| Primary / Lookup Table | Related / Transaction Table | Relationship | Key |
+|---|---|---|---|
+| Customers | Orders | One-to-Many (1:*) | `customer_id` |
+| Orders | Order Items | One-to-Many (1:*) | `order_id` |
+| Orders | Order Payments | One-to-Many (1:*) | `order_id` |
+| Orders | Order Reviews | One-to-Many (1:*) | `order_id` |
+| Products | Order Items | One-to-Many (1:*) | `product_id` |
+| Sellers | Order Items | One-to-Many (1:*) | `seller_id` |
+
+#### Relationship Explanation
+
+- **Customers → Orders:** `customer_id` links customer records to their orders. This supports customer-level order analysis and geographic analysis by customer city or state.
+- **Orders → Order Items:** `order_id` links each order to its purchased item rows. This enables product, quantity, price, freight, and category analysis at item level.
+- **Orders → Order Payments:** `order_id` connects orders to their payment records. An order may have multiple payment records, supporting payment type, value, and installment analysis.
+- **Orders → Order Reviews:** `order_id` links orders to review records, allowing review scores and feedback to be analyzed alongside order information.
+- **Products → Order Items:** `product_id` connects product details to the items in which products were purchased. This supports product and category performance analysis.
+- **Sellers → Order Items:** `seller_id` connects sellers to the items they fulfilled. This supports seller-level sales and revenue analysis.
+
+#### Supporting and Disconnected Tables
+
+The model also contains supporting tables that are not directly connected to the central relationships in the screenshot:
+
+| Table | Purpose |
+|---|---|
+| Geolocation | Holds geographic coordinates and location information. |
+| Category Translation | Provides English translations for product category names. |
+| Customer Purchase Frequency | Supports customer purchase-frequency calculations and related analysis. |
+| Customer Type | A helper table used to separate repeat customers from one-time customers in a Power BI visual. |
+
+These tables are shown as disconnected in the current model. Disconnected helper tables can be used with DAX measures and slicer/visual logic; they do not automatically filter the main model unless a measure or relationship explicitly makes that happen.
+
+#### Modelling Decisions and Benefits
+
+- Used `customer_id`, `order_id`, `product_id`, and `seller_id` as the linking keys shown in the model.
+- Used one-to-many relationships from lookup or parent tables to transaction/detail tables.
+- Kept supporting/helper tables disconnected where they serve a specific analytical purpose.
+- Used the relationships to let Power BI measures and visuals analyze information across multiple tables.
+- Organized the model around the order and order-item tables instead of combining every dataset into one large flat table.
+
+**Outcome:** The relational model provides the foundation for the SQL analysis and the four Power BI dashboards, enabling connected analysis of customers, orders, products, sellers, payments, and reviews.
 
 ### 5. SQL Business Analysis
 
@@ -222,28 +277,24 @@ E-Commerce-Multi-Table-Olist/
 The SQL analysis covers 25 business questions across different areas of the e-commerce business.
 
 ### Sales Analysis
-
 - Calculate total revenue.
 - Analyze monthly revenue trends.
 - Identify highest and lowest revenue months.
 - Calculate Average Order Value (AOV).
 
 ### Product Analysis
-
 - Identify the top 10 best-selling products.
 - Find top 10 product categories by revenue.
 - Analyze product categories by order count.
 - Identify categories with the lowest revenue.
 
 ### Customer Analysis
-
 - Calculate total unique customers.
 - Identify repeat customers.
 - Analyze average customer spending.
 - Find customer distribution by state.
 
 ### Order and Delivery Analysis
-
 - Analyze order-status distribution.
 - Calculate order-status percentages.
 - Calculate average delivery time.
@@ -251,13 +302,11 @@ The SQL analysis covers 25 business questions across different areas of the e-co
 - Analyze monthly order volume.
 
 ### Payment Analysis
-
 - Analyze payment-method frequency.
 - Calculate average payment by payment type.
 - Calculate payment-method revenue contribution.
 
 ### Seller and Review Analysis
-
 - Identify top sellers by revenue.
 - Identify top sellers by order count.
 - Calculate average review score.
@@ -275,14 +324,12 @@ The project contains four interactive Power BI dashboard pages.
 **Objective:** Analyze overall business performance, revenue generation, order volume, and regional sales contribution.
 
 ### KPIs
-
 - Total Revenue
 - Total Orders
 - Average Order Value
 - Total Customers
 
 ### Visualizations
-
 - Monthly Revenue Trend
 - Order Status Distribution
 - Revenue by State – Top 5
@@ -290,7 +337,6 @@ The project contains four interactive Power BI dashboard pages.
 - Average Customer Review Score
 
 ### Business Questions Answered
-
 - What is the overall revenue generated?
 - How does revenue change over time?
 - Which states generate the highest revenue?
@@ -306,14 +352,12 @@ The project contains four interactive Power BI dashboard pages.
 **Objective:** Understand product performance, category revenue contribution, seller performance, and pricing patterns.
 
 ### KPIs
-
 - Total Product Sales
 - Total Products
 - Total Sellers
 - Total Categories
 
 ### Visualizations
-
 - Top 10 Product Categories by Revenue
 - Top 10 Best-Selling Products
 - Top 10 Sellers by Revenue
@@ -322,7 +366,6 @@ The project contains four interactive Power BI dashboard pages.
 - Revenue Contribution by Category
 
 ### Business Questions Answered
-
 - Which product categories generate the highest revenue?
 - Which products are sold most frequently?
 - Which sellers generate the highest revenue?
@@ -338,14 +381,12 @@ The project contains four interactive Power BI dashboard pages.
 **Objective:** Analyze customer behavior, customer loyalty, spending patterns, and geographic distribution.
 
 ### KPIs
-
 - Total Unique Customers
 - Repeat Customers
 - Repeat Customer Rate
 - One-Time Customers
 
 ### Visualizations
-
 - One-Time vs. Repeat Customers
 - Top 10 States by Customer Count
 - Monthly Active Customers Trend
@@ -354,7 +395,6 @@ The project contains four interactive Power BI dashboard pages.
 - Customer Purchase Frequency Distribution
 
 ### Business Questions Answered
-
 - How many unique customers have purchased?
 - What percentage of customers make repeat purchases?
 - Which states have the largest customer base?
@@ -371,14 +411,12 @@ The project contains four interactive Power BI dashboard pages.
 **Objective:** Evaluate delivery performance and understand customer payment preferences.
 
 ### KPIs
-
 - On-Time Delivery Rate
 - Total Payment Value
 - Average Payment per Order
 - Late Delivery Orders
 
 ### Visualizations
-
 - Order Status Distribution
 - Payment Method Distribution
 - Top 10 States by Late Delivery Orders
@@ -388,7 +426,6 @@ The project contains four interactive Power BI dashboard pages.
 - Payment Value by Installment Count
 
 ### Business Questions Answered
-
 - What percentage of orders are delivered on time?
 - How many orders are delivered late?
 - Which states have the highest late-delivery counts?
@@ -405,40 +442,35 @@ The project contains four interactive Power BI dashboard pages.
 The dashboard analysis highlights several important findings:
 
 ### 1. Sales Performance
-
 - Total revenue is approximately R$16.01 million.
 - Average Order Value is approximately R$160.99.
 - São Paulo is the leading state by revenue.
 - A small group of product categories contributes significantly to overall product sales.
 
 ### 2. Product Performance
-
 - The dataset contains approximately 33K products and 74 product categories.
 - Categories such as beleza_saude, relogios_presentes, cama_mesa_banho, esporte_lazer, and informatica_acessorios are among the leading revenue contributors.
 - Product and seller rankings help identify important contributors to marketplace sales.
 
 ### 3. Customer Behavior
-
 - The dashboard displays approximately 96K unique customers.
 - Repeat customers represent approximately 3% of the displayed customer base.
 - One-time customers account for approximately 97%.
 - This indicates an opportunity to improve customer retention through loyalty programs, personalized offers, and customer engagement.
 
 ### 4. Delivery Performance
-
 - The On-Time Delivery Rate KPI displays approximately 92%.
 - The dashboard identifies approximately 7.827K late-delivery orders.
 - São Paulo has the highest late-delivery count, followed by RJ and MG.
 - Delivery performance should be investigated by considering both late-order counts and total order volume.
 
 ### 5. Payment Behavior
-
 - Credit cards contribute the largest share of payment value.
 - Boleto is the second-largest payment method by value.
 - Most payment records are concentrated in one installment.
 - Average payment value differs across payment methods.
 
-_Note: These are descriptive dashboard findings. They identify patterns and opportunities for further investigation rather than proving causation._
+*Note: These are descriptive dashboard findings. They identify patterns and opportunities for further investigation rather than proving causation.*
 
 ---
 
@@ -495,17 +527,17 @@ Update file paths and database connection settings according to your local envir
 
 ## 📌 Important KPI Definitions
 
-| KPI                       | Definition                                                                                              |
-| ------------------------- | ------------------------------------------------------------------------------------------------------- |
-| Total Revenue             | Sum of payment values                                                                                   |
-| Total Product Sales       | Sum of product item prices                                                                              |
-| Average Order Value       | Average payment value per distinct order                                                                |
-| Total Unique Customers    | Distinct customer_unique_id                                                                             |
-| Repeat Customers          | Unique customers with more than one order                                                               |
-| Repeat Customer Rate      | Repeat customers divided by total unique customers                                                      |
-| On-Time Delivery Rate     | Delivered orders arriving on or before the estimated delivery date divided by eligible delivered orders |
-| Late Delivery Orders      | Delivered orders arriving after the estimated delivery date                                             |
-| Average Payment per Order | Total payment value divided by distinct payment order IDs                                               |
+| KPI | Definition |
+|---|---|
+| Total Revenue | Sum of payment values |
+| Total Product Sales | Sum of product item prices |
+| Average Order Value | Average payment value per distinct order |
+| Total Unique Customers | Distinct customer_unique_id |
+| Repeat Customers | Unique customers with more than one order |
+| Repeat Customer Rate | Repeat customers divided by total unique customers |
+| On-Time Delivery Rate | Delivered orders arriving on or before the estimated delivery date divided by eligible delivered orders |
+| Late Delivery Orders | Delivered orders arriving after the estimated delivery date |
+| Average Payment per Order | Total payment value divided by distinct payment order IDs |
 
 **Important:** Total Payment Value and Total Product Sales are different measures. Payment value may include freight and other payment components, so the two totals are not expected to be identical.
 
